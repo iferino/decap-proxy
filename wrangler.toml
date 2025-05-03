@@ -8,6 +8,10 @@ compatibility_date = "2025-05-03"
 compatibility_flags = ["nodejs_compat"]
 main = "src/index.ts"
 
+[vars]
+GITHUB_CLIENT_ID = "Ov23liq4lVuoqfNR9C4B"
+GITHUB_CLIENT_SECRET = "2cb6099290bd0dbf845d3677d98805b02ef1a09e"
+
 
 # Variable bindings. These are arbitrary, plaintext strings (similar to environment variables)
 # Docs:
