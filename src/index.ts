@@ -8,7 +8,7 @@ interface Env {
 
 const createOAuth = (env: Env) => {
 	return new OAuthClient({
-		id: 'Ov23liq4lVuoqfNR9C4B',
+		id: env.GITHUB_OAUTH_ID,
 		secret: env.GITHUB_OAUTH_SECRET,
 		target: {
 			tokenHost: 'https://github.com',
@@ -19,17 +19,22 @@ const createOAuth = (env: Env) => {
 };
 
 const handleAuth = async (url: URL, env: Env) => {
-	const provider = url.searchParams.get('provider');
-	if (provider !== 'github') {
-		return new Response('Invalid provider', { status: 400 });
-	}
+	console.log("Client ID:", env.GITHUB_OAUTH_ID); // Add this
 
-	const oauth2 = createOAuth(env);
-	const authorizationUri = oauth2.authorizeURL({
-		redirect_uri: `https://${url.hostname}/callback?provider=github`,
-		scope: 'public_repo,user',
-		state: randomBytes(4).toString('hex'),
-	});
+  	const clientId = "Ov23liq4lVuoqfNR9C4B"; // Hardcoded
+  	const authorizationUri = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=https://${url.hostname}/callback?provider=github&scope=public_repo,user&state=${randomBytes(4).toString('hex')}`;
+
+	// const provider = url.searchParams.get('provider');
+	// if (provider !== 'github') {
+	// 	return new Response('Invalid provider', { status: 400 });
+	// }
+
+	// const oauth2 = createOAuth(env);
+	// const authorizationUri = oauth2.authorizeURL({
+	// 	redirect_uri: `https://${url.hostname}/callback?provider=github`,
+	// 	scope: 'public_repo,user',
+	// 	state: randomBytes(4).toString('hex'),
+	// });
 
 	return new Response(null, { headers: { location: authorizationUri }, status: 301 });
 };
@@ -88,6 +93,6 @@ export default {
 		if (url.pathname === '/callback') {
 			return handleCallback(url, env);
 		}
-		return new Response('Hello from updated version 🚀');
+		return new Response('Hello 👋');
 	},
 };
