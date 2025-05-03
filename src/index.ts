@@ -8,7 +8,7 @@ interface Env {
 
 const createOAuth = (env: Env) => {
 	return new OAuthClient({
-		id: env.GITHUB_OAUTH_ID,
+		id: "Ov23liq4lVuoqfNR9C4B",
 		secret: env.GITHUB_OAUTH_SECRET,
 		target: {
 			tokenHost: 'https://github.com',
