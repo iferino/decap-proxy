@@ -3,7 +3,7 @@ name = "decap-proxy"
 type = "javascript"
 
 account_id = "5ec5a75cdfe0f74aeef7951610faae7b"
-workers_dev = true
+workers_dev = false
 compatibility_date = "2025-05-03"
 compatibility_flags = ["nodejs_compat"]
 main = "src/index.ts"
