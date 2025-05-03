@@ -8,7 +8,7 @@ interface Env {
 
 const createOAuth = (env: Env) => {
 	return new OAuthClient({
-		id: "Ov23liq4lVuoqfNR9C4B",
+		id: 'Ov23liq4lVuoqfNR9C4B',
 		secret: env.GITHUB_OAUTH_SECRET,
 		target: {
 			tokenHost: 'https://github.com',
@@ -88,6 +88,6 @@ export default {
 		if (url.pathname === '/callback') {
 			return handleCallback(url, env);
 		}
-		return new Response('Hello 👋');
+		return new Response('Hello from updated version 🚀');
 	},
 };
