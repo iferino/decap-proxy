@@ -44,7 +44,9 @@ const handleAuth = async (url: URL, env: Env) => {
 		return new Response("Missing client ID", { status: 500 });
 	}	  
 
-	return new Response(null, { headers: { location: authorizationUri }, status: 301 });
+	return Response.redirect(authorizationUri, 302);
+
+	// return new Response(null, { headers: { location: authorizationUri }, status: 301 });
 };
 
 const callbackScriptResponse = (status: string, token: string) => {
@@ -59,17 +61,23 @@ const callbackScriptResponse = (status: string, token: string) => {
 				'*'
 			);
 			window.removeEventListener("message", receiveMessage, false);
-		}
+		};
 		window.addEventListener("message", receiveMessage, false);
 		window.opener.postMessage("authorizing:github", "*");
 	</script>
-	<body>
-		<p>Authorizing Decap...</p>
-	</body>
 </head>
+<body>
+	<p>Authorizing Decap...</p>
+</body>
 </html>
 `,
-		{ headers: { 'Content-Type': 'text/html' } }
+		{
+			headers: {
+				'Content-Type': 'text/html',
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*',
+			},
+		}
 	);
 };
 
