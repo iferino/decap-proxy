@@ -9,6 +9,7 @@ interface Env {
 const createOAuth = (env: Env) => {
 	console.log("Using CLIENT_ID:", env.GITHUB_OAUTH_ID);
   	console.log("Using CLIENT_SECRET:", env.GITHUB_OAUTH_SECRET);
+	console.log('OAuth ID:', env.GITHUB_OAUTH_ID);
 	return new OAuthClient({
 		id: env.GITHUB_OAUTH_ID,
 		secret: env.GITHUB_OAUTH_SECRET,
@@ -25,7 +26,8 @@ const handleAuth = async (url: URL, env: Env) => {
 
   	// const clientId = "Ov23liq4lVuoqfNR9C4B"; // Hardcoded
   	// const authorizationUri = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=https://${url.hostname}/callback?provider=github&scope=public_repo,user&state=${randomBytes(4).toString('hex')}`;
-
+	console.log('ENV in handleAuth:', JSON.stringify(env));
+	console.log('Query params:', url.searchParams.toString());
 	const provider = url.searchParams.get('provider');
 	if (provider !== 'github') {
 		return new Response('Invalid provider', { status: 400 });
@@ -37,7 +39,7 @@ const handleAuth = async (url: URL, env: Env) => {
 		scope: 'public_repo,user',
 		state: randomBytes(4).toString('hex'),
 	});
-	
+
 	if (!env.GITHUB_OAUTH_ID) {
 		return new Response("Missing client ID", { status: 500 });
 	}	  
