@@ -37,6 +37,10 @@ const handleAuth = async (url: URL, env: Env) => {
 		scope: 'public_repo,user',
 		state: randomBytes(4).toString('hex'),
 	});
+	
+	if (!env.GITHUB_OAUTH_ID) {
+		return new Response("Missing client ID", { status: 500 });
+	}	  
 
 	return new Response(null, { headers: { location: authorizationUri }, status: 301 });
 };
